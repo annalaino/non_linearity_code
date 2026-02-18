@@ -108,16 +108,16 @@ def plot_recovery_histogram(
         if df.empty or "fail_type" not in df.columns:
             continue
         
-        recovery_times = compute_recovery_time_minutes(df["fail_type"], time_step)
+        recovery_times = compute_recovery_time_minutes(df["fail_type"], time_step) 
         
         ax.hist(
-            recovery_times, 
+            recovery_times , 
             bins=bins, 
             alpha=0.5, 
             label=f'{scenario_name}'
         )
     
-    ax.set_xlabel('Recovery Time (Minutes)')
+    ax.set_xlabel('Recovery Time (hours)')
     ax.set_ylabel('Frequency')
     ax.set_title('Histogram of Recovery Times')
     ax.legend()
@@ -168,18 +168,19 @@ def plot_mean_recovery_time(
         
         scenarios.append(scenario_name)
         mean_times.append(compute_mean_recovery_time(df["fail_type"], time_step))
-    
+    mean_times_div_60 = [mean_times / 60 for mean_times in mean_times]
+        
     fig, ax = plt.subplots(figsize=(8, 5))
     
-    ax.plot(scenarios, mean_times, marker='o')
+    ax.plot(scenarios, mean_times_div_60, marker='o')
     ax.set_xlabel('Scenario')
-    ax.set_ylabel('Average Recovery Time (minutes)')
+    ax.set_ylabel('Average Recovery Time (Hours)')
     ax.set_title('Mean Recovery Time Across Scenarios')
     ax.grid(True, linestyle='--', alpha=0.6)
     
     # Annotate points
-    for x, y in zip(scenarios, mean_times):
-        ax.text(x, y, f'{y:.1f} min', ha='center', va='bottom')
+    for x, y in zip(scenarios, mean_times_div_60):
+        ax.text(x, y, f'{y:.2f} hours', ha='center', va='bottom')
     
     plt.tight_layout()
     
