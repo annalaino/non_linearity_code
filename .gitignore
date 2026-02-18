@@ -1,0 +1,25 @@
+# CSV data files
+*.csv
+
+# Output folder for generated results (CSV and plots)
+output/
+output/*
+!output/.gitkeep
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Virtual environments
+venv/
+env/
+.venv/
+
+# uv
+.uv/
+*.egg-info/
+dist/
+build/
